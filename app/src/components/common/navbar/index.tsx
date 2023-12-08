@@ -10,10 +10,19 @@ const Navbar = () => {
 			<div className='flex flex-row items-center justify-between'>
 				<div className='flex flex-row items-center gap-2'>
 					<PiAirplaneTakeoffDuotone className='text-4xl text-blue-500' />
-					<div className='hidden text-2xl font-bold sm:flex'>W3-Starter</div>
+					<div className='hidden text-2xl font-bold sm:flex'>ProWork</div>
 				</div>
 				<div className='flex flex-row items-center gap-2'>
-					<ConnectWallet btnTitle='Connect' />
+					<ConnectWallet
+						btnTitle={'Connect'}
+						modalTitle={'Start using ProWork'}
+						modalSize={'wide'}
+						welcomeScreen={{
+							title: 'Share Content Cross-Chain with ease',
+							subtitle: 'Connect to get Started',
+						}}
+						modalTitleIconUrl={''}
+					/>
 				</div>
 			</div>
 		</div>

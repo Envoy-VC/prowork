@@ -7,7 +7,12 @@ import {
 	trustWallet,
 	localWallet,
 } from '@thirdweb-dev/react';
-import { Goerli, Mumbai, BinanceTestnet,ZetachainAthens3Testnet } from '@thirdweb-dev/chains';
+import {
+	Goerli,
+	Mumbai,
+	BinanceTestnet,
+	ZetachainAthens3Testnet,
+} from '@thirdweb-dev/chains';
 
 // Metadata
 const dAppMetadata = {
@@ -30,8 +35,9 @@ const Web3Provider = ({ children }: Props) => {
 	return (
 		<ThirdwebProvider
 			clientId={NEXT_PUBLIC_TW_CLIENT_ID}
-			supportedChains={[Goerli, Mumbai, BinanceTestnet,ZetachainAthens3Testnet]}
+			supportedChains={[Goerli, Mumbai, BinanceTestnet, ZetachainAthens3Testnet]}
 			dAppMeta={dAppMetadata}
+			theme='light'
 			supportedWallets={[
 				metamaskWallet(),
 				coinbaseWallet(),

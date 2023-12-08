@@ -10,6 +10,11 @@ import { Navbar, SEO } from '~/components/common';
 
 // Font
 import { GeistSans } from 'geist/font/sans';
+import localFont from 'next/font/local';
+
+export const adieuFont = localFont({
+	src: '../../../public/fonts/Adieu-Regular.otf',
+});
 
 interface Props {
 	children: React.ReactNode;
