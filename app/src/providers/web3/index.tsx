@@ -7,10 +7,16 @@ import {
 	trustWallet,
 	localWallet,
 } from '@thirdweb-dev/react';
-import { Ethereum, Polygon } from '@thirdweb-dev/chains';
+import { Goerli, Mumbai, BinanceTestnet,ZetachainAthens3Testnet } from '@thirdweb-dev/chains';
 
 // Metadata
-import { dAppMetadata } from 'config';
+const dAppMetadata = {
+	name: 'My dApp',
+	description: 'My dApp description',
+	logoUrl: 'https://my-dapp.com/logo.png',
+	url: 'https://my-dapp.com',
+	isDarkMode: true,
+};
 
 import { env } from '~/env.mjs';
 
@@ -24,8 +30,7 @@ const Web3Provider = ({ children }: Props) => {
 	return (
 		<ThirdwebProvider
 			clientId={NEXT_PUBLIC_TW_CLIENT_ID}
-			activeChain={Ethereum}
-			supportedChains={[Ethereum, Polygon]}
+			supportedChains={[Goerli, Mumbai, BinanceTestnet,ZetachainAthens3Testnet]}
 			dAppMeta={dAppMetadata}
 			supportedWallets={[
 				metamaskWallet(),
