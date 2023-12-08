@@ -32,11 +32,13 @@ contract ProWork is
 
     constructor(
         address systemContractAddress,
-        address defaultAdmin
+        address defaultAdmin,
+        string memory baseURI
     ) ERC721("ProWork", "WORK") {
         systemContract = SystemContract(systemContractAddress);
         _grantRole(DEFAULT_ADMIN_ROLE, defaultAdmin);
         _grantRole(MINTER_ROLE, defaultAdmin);
+        setBaseURI(baseURI);
     }
 
     modifier onlySystem() {
@@ -149,6 +151,13 @@ contract ProWork is
         );
 
         safeMint(to, uri);
+    }
+
+    function estimateGas(address targetTokenAddress) public returns (uint256) {
+        (address gasZRC20, uint256 gasFee) = IZRC20(targetTokenAddress)
+            .withdrawGasFee();
+        if (gasZRC20 != targetTokenAddress) revert WrongGasContract();
+        return gasFee;
     }
 
     // NFT Logic

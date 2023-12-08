@@ -10,6 +10,7 @@ const main = async (args: any, hre: HardhatRuntimeEnvironment) => {
   }
 
   const [signer] = await hre.ethers.getSigners();
+  const ownerAddress = signer.address;
   if (signer === undefined) {
     throw new Error(
       `Wallet not found. Please, run "npx hardhat account --save" or set PRIVATE_KEY env variable (for example, in a .env file)`
@@ -18,8 +19,8 @@ const main = async (args: any, hre: HardhatRuntimeEnvironment) => {
 
   const systemContract = getAddress("systemContract", "zeta_testnet");
 
-  const factory = await hre.ethers.getContractFactory("Swap");
-  const contract = await factory.deploy(systemContract);
+  const factory = await hre.ethers.getContractFactory("ProWork");
+  const contract = await factory.deploy(systemContract, ownerAddress,"");
   await contract.deployed();
 
   if (args.json) {
