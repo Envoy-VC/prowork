@@ -14,7 +14,7 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 
-contract Swap is
+contract ProWork is
     zContract,
     ERC721,
     ERC721Enumerable,
@@ -33,7 +33,7 @@ contract Swap is
     constructor(
         address systemContractAddress,
         address defaultAdmin
-    ) ERC721("MyToken", "MTK") {
+    ) ERC721("ProWork", "WORK") {
         systemContract = SystemContract(systemContractAddress);
         _grantRole(DEFAULT_ADMIN_ROLE, defaultAdmin);
         _grantRole(MINTER_ROLE, defaultAdmin);
