@@ -22,6 +22,9 @@ const AntDesignConfigProvider = ({ children }: Props) => {
 		<ConfigProvider
 			theme={{
 				algorithm: theme.defaultAlgorithm,
+				token: {
+					colorPrimary: '#4fcdfb',
+				},
 			}}
 		>
 			{mounted && children}

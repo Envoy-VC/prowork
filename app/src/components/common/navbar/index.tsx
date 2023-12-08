@@ -4,13 +4,16 @@ import Link from 'next/link';
 import { ConnectWallet } from '@thirdweb-dev/react';
 import { usePathname } from 'next/navigation';
 
+// Icons
+import { SiPaloaltonetworks } from 'react-icons/si';
+
 const NavLinks = [
 	{
-		name: 'for customers',
+		name: 'hire',
 		href: '/',
 	},
 	{
-		name: 'for constructors',
+		name: 'work',
 		href: '/work',
 	},
 ];
@@ -18,36 +21,31 @@ const NavLinks = [
 const Navbar = () => {
 	const pathname = usePathname();
 	return (
-		<div className='p-4 px-6'>
+		<div className='mx-auto max-w-screen-2xl py-8'>
 			<div className='flex flex-row items-center justify-between'>
-				<div className='flex flex-row items-center gap-2'>
-					<div className='hidden text-xl font-semibold sm:flex'>ProWork</div>
+				<div className='flex flex-row items-center gap-2 rounded-full bg-gray-100 px-4 py-3'>
+					<SiPaloaltonetworks className='text-secondary text-2xl' />
+					<div className='flex text-xl font-medium'>ProWork</div>
 				</div>
-				<div className='flex flex-row items-center gap-4'>
+				<div className='hidden w-fit flex-row items-center rounded-full bg-gray-100 sm:flex'>
 					{NavLinks.map((link, index) => (
 						<Link href={link.href} key={index}>
 							<div className='group relative overflow-x-hidden'>
-								<span
-									className={clsx(
-										'text-xl',
-										pathname === link.href ? 'font-bold' : 'font-normal'
-									)}
-								>
-									{link.name}
-								</span>
 								<div
 									className={clsx(
-										'absolute bottom-0 h-[3px] w-full bg-black duration-500 ease-out group-hover:translate-x-0',
-										pathname === link.href ? 'translate-x-0' : 'translate-x-[-102%]'
+										'rounded-full px-4 py-3 text-lg font-medium',
+										pathname === link.href ? 'bg-gray-200 px-6' : ''
 									)}
-								></div>
+								>
+									{link.name.toUpperCase()}
+								</div>
 							</div>
 						</Link>
 					))}
 				</div>
 				<div className='flex flex-row items-center gap-2'>
 					<ConnectWallet
-						btnTitle='get started'
+						btnTitle='GET STARTED'
 						modalTitle={'Start using ProWork'}
 						modalSize={'wide'}
 						welcomeScreen={{
