@@ -92,9 +92,11 @@ const ProfileCard = ({
 				)}
 			</div>
 			<div className='flex justify-center py-4'>
-				<Button className='bg-secondary' type='primary' size='large' shape='round'>
-					Chat
-				</Button>
+				<Link href={`/profile/${ownedBy}`} target='_blank'>
+					<Button className='bg-secondary' type='primary' size='large' shape='round'>
+						Chat
+					</Button>
+				</Link>
 			</div>
 		</div>
 	);
