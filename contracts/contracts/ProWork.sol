@@ -83,7 +83,6 @@ contract ProWork is
         address destinationToken
     ) internal view returns (string memory) {
         bytes memory uri = abi.encodePacked(
-            _baseURI(),
             "?from=",
             Strings.toHexString(uint256(uint160(from)), 20),
             "&to=",

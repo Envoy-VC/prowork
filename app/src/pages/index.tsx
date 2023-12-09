@@ -15,7 +15,7 @@ import { Hero } from '~/components/home';
 const Home: NextPageWithLayout = () => {
 	const signer = useSigner();
 	const onClick = async () => {
-		const omniChainContract = '0x1CC0De57B2326498BF958531Bb2f8F5BE085aE55';
+		const omniChainContract = '0x1Be3F441c1F2a479BA7890f83B9B667DB6B30911';
 		const amount = 0.01;
 		const targetToken = '0x48f80608B672DC30DC7e3dbBd0343c5F02C738Eb';
 		const sender = '0xe269688F24e1C7487f649fC3dCD99A4Bf15bDaA1';
@@ -59,7 +59,6 @@ const Home: NextPageWithLayout = () => {
 					))}
 				</div>
 			</div>
-			<Button onClick={onClick}>Click</Button>
 		</div>
 	);
 };
