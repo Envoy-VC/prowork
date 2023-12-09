@@ -3,7 +3,11 @@ import { Input, Button } from 'antd';
 
 // hooks
 import { useChatStore } from '~/stores';
-import { isValidAddress, useStartConversation } from '@xmtp/react-sdk';
+import {
+	isValidAddress,
+	useStartConversation,
+	useSendMessage,
+} from '@xmtp/react-sdk';
 
 // Icons
 import { TbSend, TbCash } from 'react-icons/tb';
@@ -12,6 +16,8 @@ import toast from 'react-hot-toast';
 
 const ChatBox = () => {
 	const { startConversation } = useStartConversation();
+	const { sendMessage } = useSendMessage();
+
 	const { peerAddress, setConversation, conversation } = useChatStore();
 
 	const [message, setMessage] = React.useState<string>('');
@@ -20,7 +26,7 @@ const ChatBox = () => {
 	const handleStartConversation = React.useCallback(
 		async (message: string) => {
 			if (message === '') return;
-			if (peerAddress && message) {
+			if (peerAddress && message && isValidAddress(peerAddress)) {
 				setIsSending(true);
 				const conversation = await startConversation(peerAddress, message);
 				console.log(conversation);
@@ -32,6 +38,15 @@ const ChatBox = () => {
 		[message, peerAddress, startConversation]
 	);
 
+	const handleSendMessage = React.useCallback(
+		async (message: string) => {
+			if (peerAddress && isValidAddress(peerAddress) && message && conversation) {
+				await sendMessage(conversation, message);
+			}
+		},
+		[message, peerAddress, sendMessage]
+	);
+
 	const handleSend = async () => {
 		if (message === '') {
 			toast.error('Message cannot be empty');
@@ -41,6 +56,8 @@ const ChatBox = () => {
 			setIsSending(true);
 			if (!conversation) {
 				await handleStartConversation(message);
+			} else {
+				await handleSendMessage(message);
 			}
 			setMessage('');
 		} catch (error) {

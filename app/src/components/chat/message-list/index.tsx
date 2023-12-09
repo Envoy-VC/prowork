@@ -26,14 +26,14 @@ const MessageList = () => {
 
 	React.useEffect(() => {
 		setStreamedMessages([]);
-	}, [conversation]);
+	}, [conversation, messages]);
 
 	return (
 		<div
 			className='scrollbar-hide flex w-full flex-col gap-1 overflow-y-scroll p-4 px-2 sm:px-8'
 			ref={chatContainer}
 		>
-			{messages?.map((message, index) => {
+			{messages.map((message, index) => {
 				return <div key={index}>{message.content}</div>;
 			})}
 			{streamedMessages?.map((message, index) => {
