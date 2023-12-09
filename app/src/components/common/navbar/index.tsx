@@ -21,7 +21,7 @@ const NavLinks = [
 const Navbar = () => {
 	const pathname = usePathname();
 	return (
-		<div className='mx-auto max-w-screen-2xl py-8'>
+		<div className='mx-auto max-w-screen-2xl py-8 px-3'>
 			<div className='flex flex-row items-center justify-between'>
 				<div className='flex flex-row items-center gap-2 rounded-full bg-gray-100 px-4 py-3'>
 					<SiPaloaltonetworks className='text-secondary text-2xl' />

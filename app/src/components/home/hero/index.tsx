@@ -11,7 +11,7 @@ const delaOne = Dela_Gothic_One({ weight: '400', subsets: ['latin'] });
 
 const Hero = () => {
 	return (
-		<div className='mx-auto my-8 max-w-screen-2xl px-4'>
+		<div className='mx-auto my-16 max-w-screen-2xl px-4'>
 			<div
 				className={clsx(
 					'flex flex-col text-4xl uppercase leading-[1.1] text-slate-900 md:text-[5rem]',
