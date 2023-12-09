@@ -1,15 +1,26 @@
+import React from 'react';
 import type { ReactElement } from 'react';
 import { Layout } from '~/components';
 import type { NextPageWithLayout } from '../_app';
 
 import { useRouter } from 'next/router';
 
+import { useChatStore } from '~/stores';
+
 // Components
 import { ProfileChat, ProfileDetails } from '~/sections/profile';
 
 const Profile: NextPageWithLayout = () => {
+	const { setPeerAddress } = useChatStore();
 	const router = useRouter();
 	const address = router.query?.address as string;
+
+	React.useEffect(() => {
+		if (address) {
+			setPeerAddress(address);
+		}
+	}, [address]);
+
 	return (
 		<div className='mx-auto flex h-[85vh] max-w-screen-2xl flex-col gap-8 px-4 md:flex-row'>
 			<div className='order-2 h-full w-full basis-1/2 md:order-1'>

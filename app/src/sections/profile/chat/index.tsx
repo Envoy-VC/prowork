@@ -2,38 +2,27 @@ import React from 'react';
 import { useClient } from '@xmtp/react-sdk';
 import { useSigner, useAddress } from '@thirdweb-dev/react';
 import { Button } from 'antd';
-import toast from 'react-hot-toast';
+import { ChatArea } from '~/sections';
 
 import { CgSpinner } from 'react-icons/cg';
-import ReactNode from 'react';
 
 const ProfileChat = () => {
-	const { client, error, isLoading, initialize } = useClient();
+	const { client, isLoading, initialize } = useClient();
 	const signer = useSigner();
 	const address = useAddress();
 
-	const handleConnect = React.useCallback(async () => {
+	const handleConnect = async () => {
 		const options = {
 			persistConversations: false,
 			env: 'dev' as 'dev' | 'local' | 'production' | undefined,
 		};
-		try {
-			await initialize({ options, signer });
-		} catch (error) {
-			toast.error('An error occurred while initializing the client');
-		}
-	}, [initialize]);
+		await initialize({ options, signer });
+	};
 
 	if (!address) {
 		return (
 			<Wrapper>
-				<Button
-					type='primary'
-					// eslint-disable-next-line @typescript-eslint/no-misused-promises
-					onClick={handleConnect}
-				>
-					Connect Wallet
-				</Button>
+				<div>Connect you Wallet</div>
 			</Wrapper>
 		);
 	} else if (address && !client && !isLoading) {
@@ -62,7 +51,7 @@ const ProfileChat = () => {
 	} else if (address && client) {
 		return (
 			<Wrapper>
-				<div>Connected</div>
+				<ChatArea />
 			</Wrapper>
 		);
 	}
