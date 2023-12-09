@@ -7,6 +7,9 @@ import {
 
 import clsx from 'clsx';
 import { Navbar, SEO } from '~/components/common';
+import { AirstackProvider } from '@airstack/airstack-react';
+
+import { env } from '~/env.mjs';
 
 // Font
 import { GeistSans } from 'geist/font/sans';
@@ -27,10 +30,12 @@ const Layout = ({ children }: Props) => {
 			<AntDesignConfigProvider>
 				<Web3Provider>
 					<NotificationProvider>
-						<div className={clsx(GeistSans.className)}>
-							<Navbar />
-							{children}
-						</div>
+						<AirstackProvider apiKey={env.NEXT_PUBLIC_AIRSTACK_API_KEY}>
+							<div className={clsx(GeistSans.className)}>
+								<Navbar />
+								{children}
+							</div>
+						</AirstackProvider>
 					</NotificationProvider>
 				</Web3Provider>
 			</AntDesignConfigProvider>

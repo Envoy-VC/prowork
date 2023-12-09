@@ -9,6 +9,7 @@
 		"start": "next start"
 	},
 	"dependencies": {
+		"@airstack/airstack-react": "^0.6.1",
 		"@ant-design/cssinjs": "^1.18.1",
 		"@t3-oss/env-nextjs": "^0.6.1",
 		"@thirdweb-dev/chains": "^0.1.60",
