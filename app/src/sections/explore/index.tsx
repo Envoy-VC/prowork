@@ -18,7 +18,7 @@ const ExploreProfiles = () => {
 	}, []);
 	if (profiles)
 		return (
-			<div className='grid grid-cols-1 justify-items-center sm:grid-cols-2 lg:grid-cols-3'>
+			<div className='grid grid-cols-1 justify-items-center gap-6 py-16 sm:grid-cols-2 lg:grid-cols-3'>
 				{profiles.map((profile, index) => (
 					<ProfileCard key={index} {...profile} />
 				))}

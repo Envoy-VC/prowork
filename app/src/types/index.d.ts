@@ -1,6 +1,7 @@
 export interface ProfileType {
 	id: string;
 	name: string;
+	handle: string;
 	bio: string;
 	picture: {
 		original: {
@@ -29,4 +30,5 @@ export interface ProfileType {
 		totalFollowing: number;
 	};
 	interests: string[];
+	ownedBy: string;
 }

@@ -20,8 +20,6 @@ export const getTop50Profiles = async () => {
 	data.forEach((profile) => {
 		profileIds.push(profile.id);
 	});
-	console.log(profileIds);
-
 	return profileIds;
 };
 
@@ -48,4 +46,28 @@ export const getFeed = async () => {
 		};
 	};
 	return data.data.profiles.items;
+};
+
+export const sanitizeURL = (url: string) => {
+	if (url.startsWith('https://')) {
+		return url;
+	} else if (url.startsWith('ipfs://')) {
+		return `https://ipfs.io/ipfs/${url.slice(7)}`;
+	} else if (url.startsWith('ar://')) {
+		return `https://arweave.net/${url.slice(5)}`;
+	} else {
+		return url;
+	}
+};
+
+export const formatFollowers = (count: number) => {
+	if (count < 1000) {
+		return count;
+	} else if (count < 1000000) {
+		return (count / 1000).toFixed(1) + 'K';
+	} else if (count < 1000000000) {
+		return (count / 1000000).toFixed(1) + 'M';
+	} else {
+		return (count / 1000000000).toFixed(1) + 'B';
+	}
 };

@@ -58,6 +58,8 @@ export const getProfilesQuery = () => {
 				items {
 					id
 					name
+					handle
+					ownedBy
 					bio
 					picture {
 						... on MediaSet {
