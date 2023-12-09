@@ -37,7 +37,7 @@ const Hero = () => {
 					/>
 				</Space.Compact>
 				<Button
-					className='!border-none bg-black text-white hover:!bg-black'
+					className='!border-none bg-slate-900 text-white hover:!bg-slate-900'
 					size='large'
 					type='primary'
 				>
