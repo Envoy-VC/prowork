@@ -20,7 +20,7 @@ const ChatArea = () => {
 	}, [isLoading]);
 
 	return (
-		<div className='scrollbar-hide flex h-full w-full flex-col justify-end overflow-y-scroll p-2'>
+		<div className='scrollbar-hide profileDetails flex h-[80vh] w-full flex-col justify-end overflow-y-scroll rounded-md'>
 			{!conversation && (
 				<div className='flex h-full w-full items-center justify-center'>
 					Start a new Conversation

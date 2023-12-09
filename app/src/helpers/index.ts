@@ -100,3 +100,31 @@ export const getMessageTime = (timestamp: number) => {
 		}
 	});
 };
+
+import { ZetaChainContracts } from './contracts';
+import { BinanceTestnet, Goerli, Mumbai } from '@thirdweb-dev/chains';
+
+export const getTargetChainAndTss = (targetToken: string) => {
+	if (ZetaChainContracts.bscTestnet.zrc20 === targetToken) {
+		return {
+			icon: 'https://ipfs.io/ipfs/' + BinanceTestnet.icon.url.slice(7),
+			name: 'tBSC',
+			targetToken: ZetaChainContracts.bscTestnet.zrc20,
+			tss: ZetaChainContracts.bscTestnet.tss,
+		};
+	} else if (ZetaChainContracts.goerliTestnet.zrc20 === targetToken) {
+		return {
+			icon: 'https://ipfs.io/ipfs/' + Goerli.icon.url.slice(7),
+			name: 'gETH',
+			targetToken: ZetaChainContracts.goerliTestnet.zrc20,
+			tss: ZetaChainContracts.goerliTestnet.tss,
+		};
+	} else {
+		return {
+			icon: 'https://ipfs.io/ipfs/' + Mumbai.icon.url.slice(7),
+			name: 'MATIC',
+			targetToken: ZetaChainContracts.mumbaiTestnet.zrc20,
+			tss: ZetaChainContracts.mumbaiTestnet.tss,
+		};
+	}
+};

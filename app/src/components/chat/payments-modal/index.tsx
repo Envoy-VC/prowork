@@ -2,7 +2,19 @@ import React from 'react';
 import { Modal, Button, Select, Avatar, InputNumber } from 'antd';
 import type { SelectProps } from 'antd';
 
+import { useSendMessage } from '@xmtp/react-sdk';
+import { useAddress } from '@thirdweb-dev/react';
+
+import { ContentTypeZetaChainInteraction } from '~/lib/xmtp';
+import type { ContentProps } from '~/lib/xmtp';
+
 import { Mumbai, Goerli, BinanceTestnet } from '@thirdweb-dev/chains';
+import { useChatStore } from '~/stores';
+
+import {
+	OmniChainContractAddress,
+	ZetaChainContracts,
+} from '~/helpers/contracts';
 
 interface Props {
 	open: boolean;
@@ -24,7 +36,7 @@ const supportedTokens = [
 	},
 	{
 		title: 'tBSC',
-		name: 'binanceTestnet',
+		name: 'bscTestnet',
 		chainId: BinanceTestnet.chainId,
 		logo: BinanceTestnet.icon.url,
 	},
@@ -33,6 +45,34 @@ const supportedTokens = [
 const PaymentsModal = ({ open, close }: Props) => {
 	const [token, setToken] = React.useState<string>('goerliTestnet');
 	const [amount, setAmount] = React.useState<string>('0.01');
+
+	const { sendMessage } = useSendMessage();
+	const { conversation } = useChatStore();
+	const [isSending, setIsSending] = React.useState(false);
+	const address = useAddress();
+
+	const handleSend = async () => {
+		if (!conversation) return;
+		if (parseInt(amount) < 0) return;
+		try {
+			setIsSending(true);
+			const message: ContentProps = {
+				omniChainContractAddress: OmniChainContractAddress,
+				targetToken:
+					ZetaChainContracts[
+						token as 'mumbaiTestnet' | 'bscTestnet' | 'goerliTestnet'
+					].zrc20,
+				recipient: address!,
+				amount,
+			};
+			await sendMessage(conversation, message, ContentTypeZetaChainInteraction);
+			close();
+		} catch (error) {
+			console.log(error);
+		} finally {
+			setIsSending(false);
+		}
+	};
 
 	const handleChange = (value: string) => {
 		setToken(value);
@@ -79,7 +119,12 @@ const PaymentsModal = ({ open, close }: Props) => {
 				/>
 
 				<div className='flex w-full justify-center py-6'>
-					<Button className='bg-secondary' type='primary'>
+					<Button
+						className='bg-secondary'
+						type='primary'
+						// eslint-disable-next-line @typescript-eslint/no-misused-promises
+						onClick={handleSend}
+					>
 						Request
 					</Button>
 				</div>

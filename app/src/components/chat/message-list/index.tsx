@@ -4,13 +4,16 @@ import type { DecodedMessage } from '@xmtp/react-sdk';
 
 import { useChatStore } from '~/stores';
 
-import ChatPill from '../chat-pill';
+import ChatPill, { CachedMessagePill } from '../chat-pill';
 import SkeletonChatPill from '../chat-pill/skeleton';
+import type { ContentProps } from '~/lib/xmtp';
+
+import ZetaChainPill from '../zetachain-pill';
 
 const MessageList = () => {
 	const { conversation } = useChatStore();
 	const chatContainer = React.useRef<HTMLDivElement>(null);
-	const { messages, isLoading, error } = useMessages(conversation!);
+	const { messages, isLoading, error, isLoaded } = useMessages(conversation!);
 
 	const [streamedMessages, setStreamedMessages] = React.useState<
 		DecodedMessage[]
@@ -42,9 +45,27 @@ const MessageList = () => {
 
 	return (
 		<div
-			className='scrollbar-hide flex h-full w-full flex-col gap-1 overflow-y-scroll p-4 px-2 sm:px-8'
+			className='scrollbar-hide flex w-full flex-col gap-1 overflow-y-scroll p-4 px-2 sm:px-8'
 			ref={chatContainer}
 		>
+			{isLoaded &&
+				messages.map((message, index) => {
+					if (message.contentType === 'xmtp.org/text:1.0') {
+						return (
+							<div className='w-full' key={index}>
+								<CachedMessagePill {...message} />
+							</div>
+						);
+					} else if (
+						message.contentType === 'prowork-one.vercel.app/zetachain-interaction:1.0'
+					) {
+						return (
+							<div className='w-full' key={index}>
+								<ZetaChainPill message={message} />
+							</div>
+						);
+					}
+				})}
 			{!isLoading && !error ? (
 				streamedMessages.map((message, index) => {
 					if (message.contentType.typeId === 'text') {
@@ -53,10 +74,10 @@ const MessageList = () => {
 								<ChatPill {...message} toBytes={() => message.toBytes()} />
 							</div>
 						);
-					} else if (message.contentType.typeId === 'custom') {
+					} else if (message.contentType.typeId === 'zetachain-interaction') {
 						return (
 							<div className='w-full' key={index}>
-								todo
+								<ZetaChainPill message={message} />
 							</div>
 						);
 					}

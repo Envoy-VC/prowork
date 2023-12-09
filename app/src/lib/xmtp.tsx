@@ -1,16 +1,15 @@
 import { ContentTypeId } from '@xmtp/react-sdk';
 import type { ContentCodec, EncodedContent } from '@xmtp/react-sdk';
 
-const ContentTypeZetaChainInteraction = new ContentTypeId({
+export const ContentTypeZetaChainInteraction = new ContentTypeId({
 	authorityId: 'prowork-one.vercel.app',
 	typeId: 'zetachain-interaction',
 	versionMajor: 1,
 	versionMinor: 0,
 });
 
-interface ContentProps {
+export interface ContentProps {
 	omniChainContractAddress: string;
-	sourceTssAddress: string;
 	amount: string;
 	targetToken: string;
 	recipient: string;
@@ -23,7 +22,6 @@ export class ZetaChainTypeCodec implements ContentCodec<ContentProps> {
 
 	encode({
 		omniChainContractAddress,
-		sourceTssAddress,
 		amount,
 		targetToken,
 		recipient,
@@ -34,7 +32,6 @@ export class ZetaChainTypeCodec implements ContentCodec<ContentProps> {
 			content: new TextEncoder().encode(
 				JSON.stringify({
 					omniChainContractAddress,
-					sourceTssAddress,
 					amount,
 					targetToken,
 					recipient,
@@ -45,16 +42,10 @@ export class ZetaChainTypeCodec implements ContentCodec<ContentProps> {
 
 	decode(encodedContent: EncodedContent): ContentProps {
 		const uint8Array = encodedContent.content;
-		const {
-			omniChainContractAddress,
-			sourceTssAddress,
-			amount,
-			targetToken,
-			recipient,
-		} = JSON.parse(new TextDecoder().decode(uint8Array)) as ContentProps;
+		const { omniChainContractAddress, amount, targetToken, recipient } =
+			JSON.parse(new TextDecoder().decode(uint8Array)) as ContentProps;
 		return {
 			omniChainContractAddress,
-			sourceTssAddress,
 			amount,
 			targetToken,
 			recipient,
@@ -63,11 +54,10 @@ export class ZetaChainTypeCodec implements ContentCodec<ContentProps> {
 
 	fallback({
 		omniChainContractAddress,
-		sourceTssAddress,
 		amount,
 		targetToken,
 		recipient,
 	}: ContentProps): string {
-		return `A ZetaChain Contract Interaction is requested to OmniChain Contract ${omniChainContractAddress} and ${amount}on TSS ${sourceTssAddress} to Token ${targetToken} and recipient ${recipient}`;
+		return `A ZetaChain Contract Interaction is requested to OmniChain Contract ${omniChainContractAddress} and ${amount}to Token ${targetToken} and recipient ${recipient}`;
 	}
 }

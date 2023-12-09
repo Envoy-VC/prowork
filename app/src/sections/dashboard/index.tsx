@@ -61,7 +61,7 @@ const Dashboard = () => {
 				<div className='w-full basis-1/3'>
 					<Chats />
 				</div>
-				<div className='w-full basis-2/3 border-2'>
+				<div className='w-full basis-2/3'>
 					<ChatArea />
 				</div>
 			</div>

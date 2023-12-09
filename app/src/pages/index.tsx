@@ -7,6 +7,8 @@ import { TbArrowRight } from 'react-icons/tb';
 import { Button } from 'antd';
 import { useSigner } from '@thirdweb-dev/react';
 
+import { getQuoteCrossChainSwap } from '~/lib/uniswap';
+
 import { ethers } from 'ethers';
 
 // Components
@@ -41,6 +43,14 @@ const Home: NextPageWithLayout = () => {
 		});
 		console.log(tx?.hash);
 	};
+
+	const getQuotes = async () => {
+		const quotes = await getQuoteCrossChainSwap({
+			sourceAmount: '0.01',
+			sourceZRC20: '0x13A0c5930C028511Dc02665E7285134B6d11A5f4',
+			destinationZRC20: '0x48f80608B672DC30DC7e3dbBd0343c5F02C738Eb',
+		});
+	};
 	return (
 		<div className=''>
 			<Hero />
@@ -59,6 +69,12 @@ const Home: NextPageWithLayout = () => {
 					))}
 				</div>
 			</div>
+			<Button
+				// eslint-disable-next-line @typescript-eslint/no-misused-promises
+				onClick={getQuotes}
+			>
+				Click
+			</Button>
 		</div>
 	);
 };
