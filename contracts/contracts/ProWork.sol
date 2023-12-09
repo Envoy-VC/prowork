@@ -63,10 +63,16 @@ contract ProWork is
         return baseUri;
     }
 
-    function bytesToAddress(bytes memory b) internal pure returns (address a) {
-        require(b.length == 20);
+    function bytesMemoryToAddress(
+        bytes memory data,
+        uint256 offset
+    ) internal pure returns (address output) {
+        bytes memory b = new bytes(20);
+        for (uint256 i = 0; i < 20; i++) {
+            b[i] = data[i + offset];
+        }
         assembly {
-            a := div(mload(add(b, 32)), exp(256, 12))
+            output := mload(add(b, 20))
         }
     }
 
@@ -141,8 +147,8 @@ contract ProWork is
             outputAmount - gasFee
         );
 
-        address from = bytesToAddress(senderAddress);
-        address to = bytesToAddress(recipientAddress);
+        address from = bytesMemoryToAddress(senderAddress, 0);
+        address to = bytesMemoryToAddress(recipientAddress, 0);
         string memory uri = buildTokenURI(
             from,
             to,
@@ -153,7 +159,9 @@ contract ProWork is
         safeMint(to, uri);
     }
 
-    function estimateGas(address targetTokenAddress) public returns (uint256) {
+    function estimateGas(
+        address targetTokenAddress
+    ) public view returns (uint256) {
         (address gasZRC20, uint256 gasFee) = IZRC20(targetTokenAddress)
             .withdrawGasFee();
         if (gasZRC20 != targetTokenAddress) revert WrongGasContract();

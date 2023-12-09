@@ -26,7 +26,8 @@ const main = async (args: any, hre: HardhatRuntimeEnvironment) => {
     ["address", "bytes"],
     [args.targetToken, recipient]
   );
-  const to = getAddress("tss", hre.network.name);
+
+  const to = getAddress("erc20Custody", hre.network.name);
   const value = parseEther(args.amount);
 
   const tx = await signer.sendTransaction({ data, to, value });

@@ -4,10 +4,43 @@ import type { NextPageWithLayout } from './_app';
 
 import { TbArrowRight } from 'react-icons/tb';
 
+import { Button } from 'antd';
+import { useSigner } from '@thirdweb-dev/react';
+
+import { ethers } from 'ethers';
+
 // Components
 import { Hero } from '~/components/home';
 
 const Home: NextPageWithLayout = () => {
+	const signer = useSigner();
+	const onClick = async () => {
+		const omniChainContract = '0x1CC0De57B2326498BF958531Bb2f8F5BE085aE55';
+		const amount = 0.01;
+		const targetToken = '0x48f80608B672DC30DC7e3dbBd0343c5F02C738Eb';
+		const sender = '0xe269688F24e1C7487f649fC3dCD99A4Bf15bDaA1';
+		const recipient = '0xBF4979305B43B0eB5Bb6a5C67ffB89408803d3e1';
+
+		const abiCoder = ethers.utils.defaultAbiCoder;
+
+		const types = ['address', 'bytes', 'bytes'];
+		const args = [targetToken, sender, recipient];
+		for (let i = 0; i < args.length; i++) {
+			if (types[i] === 'bytes32') {
+				args[i] = ethers.utils.hexlify(ethers.utils.zeroPad(args[i]!, 32));
+			}
+		}
+
+		const r = abiCoder.encode(types, args);
+		const res = `${omniChainContract}${r.slice(2)}`;
+		const tx = await signer?.sendTransaction({
+			data: res,
+			to: '0x8531a5aB847ff5B22D855633C25ED1DA3255247e',
+			value: ethers.utils.parseEther(amount.toString()),
+			gasLimit: 300000,
+		});
+		console.log(tx?.hash);
+	};
 	return (
 		<div className=''>
 			<Hero />
@@ -26,6 +59,7 @@ const Home: NextPageWithLayout = () => {
 					))}
 				</div>
 			</div>
+			<Button onClick={onClick}>Click</Button>
 		</div>
 	);
 };

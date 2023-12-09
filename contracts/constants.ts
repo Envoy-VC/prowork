@@ -1,1 +1,1 @@
-export const ZetaSwapContract = "0x8f966BC6Ad2D241a01C1f7634C47c7419Ce96830";
+export const ZetaSwapContract = "0x1CC0De57B2326498BF958531Bb2f8F5BE085aE55";

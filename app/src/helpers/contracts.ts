@@ -1,5 +1,5 @@
 export const OmniChainContractAddress =
-	'0xe86b1899376c77e1a109eA2124E462EF58E56897';
+	'0x1CC0De57B2326498BF958531Bb2f8F5BE085aE55';
 
 export const ZetaChainContracts = {
 	bscTestnet: {
