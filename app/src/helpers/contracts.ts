@@ -18,3 +18,26 @@ export const ZetaChainContracts = {
 		zrc20: '0x48f80608B672DC30DC7e3dbBd0343c5F02C738Eb',
 	},
 };
+import { ethers } from 'ethers';
+
+interface TXDataProps {
+	targetToken: string;
+	sender: string;
+	recipient: string;
+}
+
+export const getTxData = ({ targetToken, sender, recipient }: TXDataProps) => {
+	const abiCoder = ethers.utils.defaultAbiCoder;
+
+	const types = ['address', 'bytes', 'bytes'];
+	const args = [targetToken, sender, recipient];
+	for (let i = 0; i < args.length; i++) {
+		if (types[i] === 'bytes32') {
+			args[i] = ethers.utils.hexlify(ethers.utils.zeroPad(args[i]!, 32));
+		}
+	}
+
+	const r = abiCoder.encode(types, args);
+	const res = `${OmniChainContractAddress}${r.slice(2)}`;
+	return res;
+};

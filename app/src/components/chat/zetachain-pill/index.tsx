@@ -4,6 +4,8 @@ import type { DecodedMessage, CachedMessageWithId } from '@xmtp/react-sdk';
 import type { ContentProps } from '~/lib/xmtp';
 import { Avatar, Button } from 'antd';
 
+import PayModal from '../pay-modal';
+
 import { getTargetChainAndTss } from '~/helpers';
 
 interface Props {
@@ -11,14 +13,14 @@ interface Props {
 }
 
 const ZetaChainPill = ({ message }: Props) => {
-	const { id } = message;
+	const [payModalOpen, setPayModalOpen] = React.useState<boolean>(false);
 	const sentAt =
 		(message as CachedMessageWithId).sentAt ?? (message as DecodedMessage).sent;
 	const content = message.content as ContentProps;
 	const { amount } = content;
 	const { icon, tss, name } = getTargetChainAndTss(content.targetToken);
 	return (
-		<div className='max-w-[256px] rounded-3xl bg-gray-100 p-4 my-4'>
+		<div className='my-4 max-w-[256px] rounded-3xl bg-gray-100 p-4'>
 			<div className='flex flex-col gap-4'>
 				<span className='text-center text-sm font-medium'>
 					Payment Request from
@@ -45,10 +47,16 @@ const ZetaChainPill = ({ message }: Props) => {
 					type='primary'
 					size='large'
 					shape='round'
+					onClick={() => setPayModalOpen(true)}
 				>
 					Pay Now
 				</Button>
 			</div>
+			<PayModal
+				content={content}
+				open={payModalOpen}
+				close={() => setPayModalOpen(false)}
+			/>
 		</div>
 	);
 };

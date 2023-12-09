@@ -19,6 +19,7 @@ export const getQuoteCrossChainSwap = async ({
 	sourceZRC20,
 	destinationZRC20,
 }: CrossChainSwapQuoteProps) => {
+	console.log(sourceAmount);
 	const rpc = getEndpoints('evm', 'zeta_testnet')[0]?.url;
 	const provider = new ethers.providers.StaticJsonRpcProvider(rpc);
 	const routerAddress = getAddress('uniswapv2Router02', 'zeta_testnet');
@@ -33,19 +34,17 @@ export const getQuoteCrossChainSwap = async ({
 	try {
 		zetaOut = await router.getAmountsOut(
 			ethers.utils.parseUnits(sourceAmount, 18),
-			[sourceZRC20, zetaToken]
+			[destinationZRC20, zetaToken]
 		);
 	} catch (e) {
 		console.error(e);
 	}
+
 	let dstOut;
 	try {
-		dstOut = await router.getAmountsOut(zetaOut[1], [
-			zetaToken,
-			destinationZRC20,
-		]);
-		console.log(parseFloat(ethers.utils.formatUnits(dstOut[1], 18)).toFixed(2));
+		dstOut = await router.getAmountsOut(zetaOut[1], [zetaToken, sourceZRC20]);
 	} catch (e) {
 		console.error(e);
 	}
-};	
+	return parseFloat(ethers.utils.formatUnits(dstOut[1], 18)).toFixed(5);
+};

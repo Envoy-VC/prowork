@@ -21,7 +21,7 @@ interface Props {
 	close: () => void;
 }
 
-const supportedTokens = [
+export const supportedTokens = [
 	{
 		title: 'MATIC',
 		name: 'mumbaiTestnet',
