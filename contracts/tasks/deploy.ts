@@ -20,7 +20,7 @@ const main = async (args: any, hre: HardhatRuntimeEnvironment) => {
   const systemContract = getAddress("systemContract", "zeta_testnet");
 
   const factory = await hre.ethers.getContractFactory("ProWork");
-  const contract = await factory.deploy(systemContract, ownerAddress,"");
+  const contract = await factory.deploy(systemContract, ownerAddress,"https://prowork-one.vercel.app/api/buildURI");
   await contract.deployed();
 
   if (args.json) {

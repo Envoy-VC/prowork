@@ -4,6 +4,8 @@ import { useSigner, useAddress } from '@thirdweb-dev/react';
 import { Button } from 'antd';
 import { ChatArea } from '~/sections';
 
+import { ZetaChainTypeCodec } from '~/lib/xmtp';
+
 import { CgSpinner } from 'react-icons/cg';
 
 const ProfileChat = () => {
@@ -13,10 +15,12 @@ const ProfileChat = () => {
 
 	const handleConnect = async () => {
 		const options = {
-			persistConversations: false,
+			persistConversations: true,
 			env: 'dev' as 'dev' | 'local' | 'production' | undefined,
 		};
-		await initialize({ options, signer });
+		const client = await initialize({ options, signer });
+		client?.registerCodec(new ZetaChainTypeCodec());
+		console.log(client);
 	};
 
 	if (!address) {
