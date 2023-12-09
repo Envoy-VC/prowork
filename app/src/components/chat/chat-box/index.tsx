@@ -9,6 +9,8 @@ import {
 	useSendMessage,
 } from '@xmtp/react-sdk';
 
+import PaymentsModal from '../payments-modal';
+
 // Icons
 import { TbSend, TbCash } from 'react-icons/tb';
 import { CgSpinner } from 'react-icons/cg';
@@ -19,6 +21,8 @@ const ChatBox = () => {
 	const { sendMessage } = useSendMessage();
 
 	const { peerAddress, setConversation, conversation } = useChatStore();
+
+	const [paymentModalOpen, setPaymentModalOpen] = React.useState<boolean>(false);
 
 	const [message, setMessage] = React.useState<string>('');
 	const [isSending, setIsSending] = React.useState<boolean>(false);
@@ -74,6 +78,7 @@ const ChatBox = () => {
 					type='text'
 					size='large'
 					icon={<TbCash size={24} className='text-slate-900' />}
+					onClick={() => setPaymentModalOpen(true)}
 				/>
 				<div className='flex w-full flex-col items-start justify-start gap-4'>
 					<Input.TextArea
@@ -104,6 +109,12 @@ const ChatBox = () => {
 					}
 				/>
 			</div>
+			<PaymentsModal
+				open={paymentModalOpen}
+				close={() => {
+					setPaymentModalOpen(false);
+				}}
+			/>
 		</div>
 	);
 };
