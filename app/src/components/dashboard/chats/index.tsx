@@ -55,7 +55,10 @@ const ConversationPill = ({
 	return (
 		<div
 			className={`animate-all flex w-full select-none flex-row items-center justify-between gap-4 rounded-xl p-2 duration-200 ease-in-out hover:bg-[#5a99ff2f]`}
-			onClick={() => setConversation(conversation)}
+			onClick={() => {
+				setConversation(conversation);
+				setPeerAddress(conversation.peerAddress);
+			}}
 		>
 			<div
 				className='flex cursor-pointer flex-row gap-4'

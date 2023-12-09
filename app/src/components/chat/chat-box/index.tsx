@@ -2,6 +2,7 @@ import React from 'react';
 import { Input, Button } from 'antd';
 
 // hooks
+import { usePathname } from 'next/navigation';
 import { useChatStore } from '~/stores';
 import {
 	isValidAddress,
@@ -19,6 +20,7 @@ import toast from 'react-hot-toast';
 const ChatBox = () => {
 	const { startConversation } = useStartConversation();
 	const { sendMessage } = useSendMessage();
+	const pathName = usePathname();
 
 	const { peerAddress, setConversation, conversation } = useChatStore();
 
@@ -74,12 +76,14 @@ const ChatBox = () => {
 	return (
 		<div className='flex w-full flex-col gap-2 border-t-2 border-[#F2F2F2] p-4 pt-6'>
 			<div className='flex w-full flex-row items-center gap-2'>
-				<Button
-					type='text'
-					size='large'
-					icon={<TbCash size={24} className='text-slate-900' />}
-					onClick={() => setPaymentModalOpen(true)}
-				/>
+				{pathName === '/dashboard' && (
+					<Button
+						type='text'
+						size='large'
+						icon={<TbCash size={24} className='text-slate-900' />}
+						onClick={() => setPaymentModalOpen(true)}
+					/>
+				)}
 				<div className='flex w-full flex-col items-start justify-start gap-4'>
 					<Input.TextArea
 						placeholder='Write Something...'

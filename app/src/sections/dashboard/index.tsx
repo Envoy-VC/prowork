@@ -9,6 +9,7 @@ import { Button } from 'antd';
 import { CgSpinner } from 'react-icons/cg';
 
 import { Chats } from '~/components/dashboard';
+import ChatArea from '../chat-area';
 
 const Dashboard = () => {
 	const { client, isLoading, initialize } = useClient();
@@ -60,7 +61,9 @@ const Dashboard = () => {
 				<div className='w-full basis-1/3'>
 					<Chats />
 				</div>
-				<div className='w-full basis-2/3 border-2'>chat area</div>
+				<div className='w-full basis-2/3 border-2'>
+					<ChatArea />
+				</div>
 			</div>
 		);
 	}
