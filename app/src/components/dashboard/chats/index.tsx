@@ -67,7 +67,6 @@ const ConversationPill = ({
 		onMessages: (messages) => setLastMessage(messages[messages.length - 1]),
 	});
 
-	console.log(profile);
 	return (
 		<div
 			className={`animate-all flex w-full select-none flex-row items-center justify-between gap-4 rounded-xl p-2 duration-200 ease-in-out hover:bg-[#5a99ff2f]`}
