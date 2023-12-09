@@ -10,7 +10,7 @@ import { SiPaloaltonetworks } from 'react-icons/si';
 const NavLinks = [
 	{
 		name: 'hire',
-		href: '/',
+		href: '/explore',
 	},
 	{
 		name: 'work',
@@ -21,10 +21,10 @@ const NavLinks = [
 const Navbar = () => {
 	const pathname = usePathname();
 	return (
-		<div className='mx-auto max-w-screen-2xl py-8 px-3'>
+		<div className='mx-auto max-w-screen-2xl px-3 py-8'>
 			<div className='flex flex-row items-center justify-between'>
 				<div className='flex flex-row items-center gap-2 rounded-full bg-gray-100 px-4 py-3'>
-					<SiPaloaltonetworks className='text-secondary text-2xl' />
+					<SiPaloaltonetworks className='text-2xl text-secondary' />
 					<div className='flex text-xl font-medium'>ProWork</div>
 				</div>
 				<div className='hidden w-fit flex-row items-center rounded-full bg-gray-100 sm:flex'>
