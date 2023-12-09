@@ -57,7 +57,6 @@ const Explore: NextPageWithLayout = () => {
 					SEARCH
 				</Button>
 			</div>
-
 			<ExploreProfiles />
 		</div>
 	);

@@ -142,3 +142,30 @@ export const getProfilesAirstack = () => {
 		}
 	`;
 };
+
+export const getNameAndProfileImage = () => {
+	return `
+		query getNameAndProfileImage($address: Identity!) {
+			Socials(
+				input: {
+					filter: { identity: { _eq: $address } }
+					blockchain: ethereum
+				}
+			) {
+				Social {
+					profileHandle
+					dappName
+					profileImageContentValue {
+						image {
+							original
+							extraSmall
+							large
+							medium
+							small
+						}
+					}
+				}
+			}
+		}
+	`;
+};

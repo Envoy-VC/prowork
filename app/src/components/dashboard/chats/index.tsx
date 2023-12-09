@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-	useConversations,
-	useMessages,
-	SortDirection,
-	ContentTypeId,
-} from '@xmtp/react-sdk';
+import { useConversations, useMessages } from '@xmtp/react-sdk';
 import type {
 	CachedConversation,
 	ContentTypeMetadata,
@@ -40,18 +35,39 @@ const Chats = () => {
 		);
 };
 
+import { getNameAndProfileImage } from '~/services/graphql';
+import { useLazyQueryWithPagination } from '@airstack/airstack-react';
+
+import type { ProfileNameAndImageResponse } from '~/types';
+
 const ConversationPill = ({
 	conversation,
 }: {
 	conversation: CachedConversation<ContentTypeMetadata>;
 }) => {
+	const [fetch] = useLazyQueryWithPagination<ProfileNameAndImageResponse>(
+		getNameAndProfileImage()
+	);
 	const { setConversation, setPeerAddress } = useChatStore();
 	const [lastMessage, setLastMessage] = React.useState<DecodedMessage | null>();
+
+	const [profile, setProfile] =
+		React.useState<ProfileNameAndImageResponse | null>(null);
+
+	React.useEffect(() => {
+		const fetchData = async () => {
+			const res = await fetch({
+				address: conversation.peerAddress,
+			});
+			setProfile(res.data);
+		};
+	}, []);
 
 	const {} = useMessages(conversation, {
 		onMessages: (messages) => setLastMessage(messages[messages.length - 1]),
 	});
 
+	console.log(profile);
 	return (
 		<div
 			className={`animate-all flex w-full select-none flex-row items-center justify-between gap-4 rounded-xl p-2 duration-200 ease-in-out hover:bg-[#5a99ff2f]`}

@@ -23,7 +23,6 @@ const ExploreProfiles = () => {
 				profileIds: profileIds,
 			});
 			const profilesData = res.data?.Socials?.Social ?? [];
-			console.log(profilesData);
 			setProfiles(profilesData);
 		};
 		void fetchData();

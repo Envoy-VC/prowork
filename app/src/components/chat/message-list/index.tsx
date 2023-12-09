@@ -6,7 +6,6 @@ import { useChatStore } from '~/stores';
 
 import ChatPill, { CachedMessagePill } from '../chat-pill';
 import SkeletonChatPill from '../chat-pill/skeleton';
-import type { ContentProps } from '~/lib/xmtp';
 
 import ZetaChainPill from '../zetachain-pill';
 

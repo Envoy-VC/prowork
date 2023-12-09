@@ -39,8 +39,6 @@ const ProfileCard = ({
 			? sanitizeURL(profileImage)
 			: sanitizeURL(profileContentImage);
 
-	console.log(avatar);
-
 	return (
 		<div className='flex w-full flex-col justify-between rounded-xl pb-4 shadow-xl'>
 			<div className=''>

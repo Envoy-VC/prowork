@@ -67,3 +67,21 @@ export interface BaseAirStackResponse<T> {
 		};
 	};
 }
+
+export interface ProfileNameAndImageResponse {
+	Socials: {
+		Social: {
+			profileHandle: string;
+			dappName: string;
+			profileContentValue: {
+				image: {
+					original: string;
+					extraSmall: string;
+					large: string;
+					medium: string;
+					small: string;
+				} | null;
+			};
+		}[];
+	};
+}
