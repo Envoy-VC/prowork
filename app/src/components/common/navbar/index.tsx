@@ -14,7 +14,7 @@ const NavLinks = [
 	},
 	{
 		name: 'work',
-		href: '/work',
+		href: '/dashboard',
 	},
 ];
 
