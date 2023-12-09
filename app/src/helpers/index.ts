@@ -1,5 +1,8 @@
 import { getProfilesQuery } from '~/services/graphql';
 
+// Types
+import type { ProfileType } from '~/types';
+
 export const getTop50Profiles = async () => {
 	const response = await fetch(
 		'https://lens-api.k3l.io/profile/scores?strategy=creator&offset=0&limit=50'
@@ -17,42 +20,10 @@ export const getTop50Profiles = async () => {
 	data.forEach((profile) => {
 		profileIds.push(profile.id);
 	});
+	console.log(profileIds);
 
 	return profileIds;
 };
-
-export interface ProfileType {
-	id: string;
-	name: string;
-	bio: string;
-	picture: {
-		original: {
-			url: string;
-		};
-		optimized: {
-			url: string;
-		} | null;
-		transformed: {
-			url: string;
-		} | null;
-	};
-	coverPicture: {
-		original: {
-			url: string;
-		};
-		optimized: {
-			url: string;
-		} | null;
-		transformed: {
-			url: string;
-		} | null;
-	};
-	stats: {
-		totalFollowers: number;
-		totalFollowing: number;
-	};
-	interests: string[];
-}
 
 export const getFeed = async () => {
 	const profiles = await getTop50Profiles();
@@ -69,6 +40,12 @@ export const getFeed = async () => {
 		}),
 	});
 
-	const data = (await res.json()) as ProfileType[];
-	return data;
+	const data = (await res.json()) as {
+		data: {
+			profiles: {
+				items: ProfileType[];
+			};
+		};
+	};
+	return data.data.profiles.items;
 };
