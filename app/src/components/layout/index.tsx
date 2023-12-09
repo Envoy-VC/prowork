@@ -4,6 +4,7 @@ import {
 	AntDesignConfigProvider,
 	NotificationProvider,
 } from '~/providers';
+import { XMTPProvider } from '@xmtp/react-sdk';
 
 import clsx from 'clsx';
 import { Navbar, SEO } from '~/components/common';
@@ -30,12 +31,14 @@ const Layout = ({ children }: Props) => {
 			<AntDesignConfigProvider>
 				<Web3Provider>
 					<NotificationProvider>
-						<AirstackProvider apiKey={env.NEXT_PUBLIC_AIRSTACK_API_KEY}>
-							<div className={clsx(GeistSans.className)}>
-								<Navbar />
-								{children}
-							</div>
-						</AirstackProvider>
+						<XMTPProvider>
+							<AirstackProvider apiKey={env.NEXT_PUBLIC_AIRSTACK_API_KEY}>
+								<div className={clsx(GeistSans.className)}>
+									<Navbar />
+									{children}
+								</div>
+							</AirstackProvider>
+						</XMTPProvider>
 					</NotificationProvider>
 				</Web3Provider>
 			</AntDesignConfigProvider>

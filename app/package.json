@@ -15,6 +15,7 @@
 		"@thirdweb-dev/chains": "^0.1.60",
 		"@thirdweb-dev/react": "^3.16.5",
 		"@thirdweb-dev/sdk": "^3.10.67",
+		"@xmtp/react-sdk": "^3.0.0",
 		"antd": "^5.12.1",
 		"clsx": "^2.0.0",
 		"ethers": "^5.7.2",
