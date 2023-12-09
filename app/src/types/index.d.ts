@@ -32,3 +32,38 @@ export interface ProfileType {
 	interests: string[];
 	ownedBy: string;
 }
+
+export interface AirstackProfile {
+	profileDisplayName: string;
+	profileHandle: string;
+	profileBio: string;
+	profileImage: string;
+	coverImageURI: string;
+	followingCount: string;
+	followerCount: string;
+	userAddress: string;
+	profileImageContentValue: {
+		image: {
+			original: string;
+			extraSmall: string;
+			small: string;
+			medium: string;
+		} | null;
+	};
+}
+
+export interface BaseAirStackResponse<T> {
+	Socials: {
+		Social: T[];
+		pageInfo: {
+			hasNextPage: boolean;
+			hasPrevPage: boolean;
+			nextCursor: string;
+			prevCursor: string;
+		};
+		pageInfo_cursor: {
+			nextCursor: string;
+			prevCursor: string;
+		};
+	};
+}

@@ -1,18 +1,28 @@
 import React from 'react';
-import { getFeed } from '~/helpers';
+import { getFeed, getTop50Profiles } from '~/helpers';
+import { getProfilesAirstack } from '~/services/graphql';
+import { useLazyQueryWithPagination } from '@airstack/airstack-react';
+
+import type { BaseAirStackResponse, AirstackProfile } from '~/types';
 
 import { ProfileCard } from '~/components/explore';
 
-// Types
-import type { ProfileType } from '~/types';
-
 const ExploreProfiles = () => {
-	const [profiles, setProfiles] = React.useState<ProfileType[] | null>(null);
+	const [fetch] = useLazyQueryWithPagination<
+		BaseAirStackResponse<AirstackProfile>
+	>(getProfilesAirstack());
+
+	const [profiles, setProfiles] = React.useState<AirstackProfile[] | null>(null);
 
 	React.useEffect(() => {
 		const fetchData = async () => {
-			const feed = await getFeed();
-			setProfiles(feed);
+			const profileIds = await getTop50Profiles();
+			const res = await fetch({
+				profileIds: profileIds,
+			});
+			const profilesData = res.data?.Socials?.Social ?? [];
+			console.log(profilesData);
+			setProfiles(profilesData);
 		};
 		void fetchData();
 	}, []);

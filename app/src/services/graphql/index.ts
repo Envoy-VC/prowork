@@ -107,3 +107,38 @@ export const getProfilesQuery = () => {
 		}
 	`;
 };
+
+export const getProfilesAirstack = () => {
+	return `
+		query getProfiles($profileIds: [Identity!]) {
+			Socials(
+				input: { filter: { identity: { _in: $profileIds } }, blockchain: ethereum }
+			) {
+				Social {
+					profileDisplayName
+					profileHandle
+					profileBio
+					profileImage
+					coverImageURI
+					followingCount
+					followerCount
+					userAddress
+					profileImageContentValue {
+						image {
+							original
+							extraSmall
+							small
+							medium
+						}
+					}
+				}
+				pageInfo {
+					hasNextPage
+					hasPrevPage
+					nextCursor
+					prevCursor
+				}
+			}
+		}
+	`;
+};

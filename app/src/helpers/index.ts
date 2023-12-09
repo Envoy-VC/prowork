@@ -18,7 +18,7 @@ export const getTop50Profiles = async () => {
 	const profileIds: string[] = [];
 
 	data.forEach((profile) => {
-		profileIds.push(profile.id);
+		profileIds.push(`lens_id:${profile.id}`);
 	});
 	return profileIds;
 };
@@ -52,7 +52,7 @@ export const sanitizeURL = (url: string) => {
 	if (url.startsWith('https://')) {
 		return url;
 	} else if (url.startsWith('ipfs://')) {
-		return `https://ipfs.io/ipfs/${url.slice(7)}`;
+		return `https://cloudflare-ipfs.com/ipfs/${url.slice(7)}`;
 	} else if (url.startsWith('ar://')) {
 		return `https://arweave.net/${url.slice(5)}`;
 	} else {
